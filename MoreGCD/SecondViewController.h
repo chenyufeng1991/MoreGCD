@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  SecondViewController.h
 //  MoreGCD
 //
 //  Created by chenyufeng on 16/4/28.
@@ -8,8 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
-
+@interface SecondViewController : UIViewController
 
 @end
-
