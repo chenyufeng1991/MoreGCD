@@ -22,6 +22,7 @@
     //同步操作
 #if 0
     //dispatch_queue_t 也可以自己定义，如果要自定义，可以用dispatch_queue_create方法。
+    //当然也可以使用系统提供的global_queue,main_queue
     dispatch_queue_t syncQueue = dispatch_queue_create("my.concurrent.syncQueue", DISPATCH_QUEUE_CONCURRENT);
     NSLog(@"1");
     dispatch_sync(syncQueue, ^{
@@ -51,9 +52,9 @@
 #endif
 
 #if 0
-    dispatch_queue_t syncQueue = dispatch_queue_create("my.concurrent.syncQueue", DISPATCH_QUEUE_SERIAL);
+    dispatch_queue_t syncQueue = dispatch_queue_create("my.serial.syncQueue", DISPATCH_QUEUE_SERIAL);
     NSLog(@"1");
-    dispatch_async(syncQueue, ^{
+    dispatch_sync(syncQueue, ^{
         NSLog(@"2");
 
         [NSThread sleepForTimeInterval:3];
@@ -64,7 +65,7 @@
 #endif
 
 #if 0
-    dispatch_queue_t asyncQueue = dispatch_queue_create("my.concurrent.asyncQueue", DISPATCH_QUEUE_SERIAL);
+    dispatch_queue_t asyncQueue = dispatch_queue_create("my.serial.asyncQueue", DISPATCH_QUEUE_SERIAL);
     NSLog(@"1");
     //第一个参数是指定了一个GCD队列，第二个参数是分配事务到该队列。
     dispatch_async(asyncQueue, ^{
@@ -79,10 +80,10 @@
 
 #if 0
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        //进入另一个线程
+        //进入另一个线程,处理耗时的代码块
 
         dispatch_async(dispatch_get_main_queue(), ^{
-            //返回主线程
+            //返回主线程刷新
 
         });
     });
@@ -154,6 +155,24 @@
         dispatch_semaphore_signal(sema);
     });
 #endif
+
+
+#if 0
+    //后台执行
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        //后台执行
+
+    });
+
+    //主线程执行
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //主线程执行
+
+    });
+#endif
+
+
+
 
 
 
