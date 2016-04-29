@@ -7,6 +7,7 @@
 //
 
 #import "FirstViewController.h"
+#import "ThirdViewController.h"
 
 @interface FirstViewController ()
 
@@ -31,6 +32,8 @@
     });
     
     NSLog(@"4");
+    dispatch_release(syncQueue);//最好需要释放
+
 #endif
 
     //异步操作
@@ -44,6 +47,7 @@
         NSLog(@"3");
     });
     NSLog(@"4");
+    dispatch_release(asyncQueue);
 #endif
 
 #if 0
@@ -56,6 +60,7 @@
         NSLog(@"3");
     });
     NSLog(@"4");
+    dispatch_release(syncQueue);
 #endif
 
 #if 0
@@ -69,6 +74,7 @@
         NSLog(@"3");
     });
     NSLog(@"4");
+    dispatch_release(asyncQueue);
 #endif
 
 #if 0
@@ -84,9 +90,10 @@
 
 
 #if 0
+    //在该应用声明周期内，下面的代码只会被执行一次。并且是线程安全的。
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-
+        NSLog(@"仅会被执行一次");
     });
 #endif
 
@@ -111,12 +118,36 @@
 
     /**
      *  dispatch queue共有三种：
-     （1）运行在主线程的Main Queue,通过dispatch_get_main_queue获得。
+     （1）运行在主线程的Main Queue,通过dispatch_get_main_queue获得。其实dispatch_get_main_queue也是一种dispatch_queue_t.
+      (2) 并行队列global dispatch queue ,通过dispatch_get_global_queue 获得。
+     （3）串行队列，一般用于顺序同步访问，可以创建任意数量的串行队列，每个串行队列之间是并发的。serial queue可以通过dispatch_queue_create创建。
      */
 
 
+#if 0
+    NSLog(@"1");
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        NSLog(@"延迟3s执行这里");
+    });
+#endif
 
 
+
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+
+    });
+
+
+
+
+
+
+}
+
+- (IBAction)buttonClicked:(id)sender
+{
+    ThirdViewController *vc = [[ThirdViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 @end
