@@ -170,19 +170,7 @@
 
     });
 #endif
-
-
-
-
-
-
-
-
-
-
-
-
-
+    
 }
 
 - (IBAction)buttonClicked:(id)sender
