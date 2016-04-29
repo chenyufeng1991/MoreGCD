@@ -99,7 +99,7 @@
 
 
 #if 0
-    //GCD的高级用法 线程组
+    //GCD的高级用法 线程组;线程组和信号量机制都可以实现队列的同步。
    __block int i;
    __block int j;
     dispatch_group_t group = dispatch_group_create();
@@ -132,10 +132,32 @@
 #endif
 
 
+#if 0
+    //信号量
+    /**
+     *  创建一个信号量。参数指定信号量的起始值。这个数字是你可以访问的信号量，不需要先去增加它的数量（增加信号量也叫作发射信号量）。
+     
+     初始value = 0时，信号量--，小于0，wait线程阻塞。然后执行signal，信号量++，激活wait线程。
+     *
+     */
+    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
 
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
 
+        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+        NSLog(@"chen");
     });
+
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+
+        NSLog(@"yu");
+        dispatch_semaphore_signal(sema);
+    });
+#endif
+
+
+
+
 
 
 
