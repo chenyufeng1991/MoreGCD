@@ -171,6 +171,7 @@
     });
 #endif
 
+#if 0
     //dispatch_barrier_async,对于同一个队列中的不同任务而言，在dispatch_barrier_async之前的先执行，在dispatch_barrier_async后面的后执行
     //如下面的代码所示：1和2的执行顺序不一定，但一定在dispatch_barrier_async之前执行，3和4的执行顺序不一定，但一定在dispatch_barrier_async之后执行。
     //注意dispatch_barrier_async的同步控制和线程组、信号量的同步机制粒度大小是不一样的，dispatch_barrier_async是对于同一个队列中的不同任务而言的，线程组和信号量是对于不同线程而言的。
@@ -194,6 +195,15 @@
     dispatch_async(queue, ^{
         NSLog(@"4");
     });
+#endif
+
+
+#if 0
+    //dispatch_apply是把某个代码块执行N遍
+    dispatch_apply(5, dispatch_get_global_queue(0, 0), ^(size_t index) {
+        NSLog(@"%zu",index);
+    });
+#endif
 
 }
 
