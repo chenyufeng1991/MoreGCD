@@ -39,6 +39,7 @@
 
     //异步操作
 #if 0
+    //注意传入的第二个参数，如果是serial或者NULL，表示是串行队列；如果是concurrent，表示是并行队列。
     dispatch_queue_t asyncQueue = dispatch_queue_create("my.concurrent.asyncQueue", DISPATCH_QUEUE_CONCURRENT);
     NSLog(@"1");
     dispatch_async(asyncQueue, ^{
