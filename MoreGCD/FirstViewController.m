@@ -102,6 +102,7 @@
 
 #if 0
     //GCD的高级用法 线程组;线程组和信号量机制都可以实现队列的同步。
+    //当一个线程组里面的任务全都执行完成后，就会发送一个通知。
    __block int i;
    __block int j;
     dispatch_group_t group = dispatch_group_create();
